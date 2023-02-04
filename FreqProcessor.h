@@ -10,7 +10,7 @@ public:
 private:
 	double zStack[3] { 0, 0, 0 };
 	double mNc;
-	int mSampleRate = 44100;
+	int mSampleRate;
 	double mC;
 	double apf(double in);
 };

@@ -53,6 +53,9 @@ CVDFreq::CVDFreq(IPlugInstanceInfo instanceInfo)
 
   //MakePreset("preset 1", ... );
   MakeDefaultPreset((char *) "-", kNumPrograms);
+
+  mFreqProcessorL.setSampleRate(GetSampleRate());
+  mFreqProcessorR.setSampleRate(GetSampleRate());
 }
 
 CVDFreq::~CVDFreq() {}

@@ -18,8 +18,6 @@ enum ELayout
   kWidth = GUI_WIDTH,
   kHeight = GUI_HEIGHT,
 
-  kGainX = 50,
-  kGainY = 100,
   kRX = 45,
   kRY = 55,
   kCutFreqX = 120,
@@ -28,13 +26,11 @@ enum ELayout
 };
 
 CVDFreq::CVDFreq(IPlugInstanceInfo instanceInfo)
-  :	IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo), mGain(1.)
+  :	IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo), mCutFreq(0.25)
 {
   TRACE;
 
   //arguments are: name, defaultVal, minVal, maxVal, step, label
-  GetParam(kGain)->InitDouble("Gain", 50., 0., 100.0, 0.01, "%");
-  GetParam(kGain)->SetShape(2.);
   GetParam(kCutFreq)->InitDouble("Cutoff Frequency", 50., 30., 16000.0, 1.00, "Hz");
   GetParam(kCutFreq)->SetShape(2.);
   GetParam(kR)->InitDouble("R", 100., 0., 100.0, 1.00, "%");
@@ -77,12 +73,6 @@ void CVDFreq::ProcessDoubleReplacing(double** inputs, double** outputs, int nFra
   mFreqProcessorHpR.highPass(in2, temp2, nFrames);
   mFreqProcessorLpL.lowPass(temp1, out1, nFrames);
   mFreqProcessorLpR.lowPass(temp2, out2, nFrames);
-  for (int s = 0; s < nFrames; ++s, ++out1, ++out2)
-  {
-    *out1 *= mGain;
-    *out2 *= mGain;
-  }
-
 }
 
 void CVDFreq::Reset()
@@ -97,17 +87,11 @@ void CVDFreq::OnParamChange(int paramIdx)
 
   switch (paramIdx)
   {
-    case kGain:
-      mGain = GetParam(kGain)->Value() / 100.;
-      break;
-
     case kCutFreq:
       mFreqProcessorHpL.setCutFreq(GetParam(kCutFreq)->Value());
       mFreqProcessorHpR.setCutFreq(GetParam(kCutFreq)->Value());
       mFreqProcessorLpL.setCutFreq(GetParam(kCutFreq)->Value());
       mFreqProcessorLpR.setCutFreq(GetParam(kCutFreq)->Value());
-      break;
-   case kR:
       break;
 
     default:

@@ -16,7 +16,7 @@ public:
   void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames);
 
 private:
-  double mGain;
+  double mCutFreq;
   FreqProcessor mFreqProcessorHpR;
   FreqProcessor mFreqProcessorHpL;
   FreqProcessor mFreqProcessorLpR;

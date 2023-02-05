@@ -17,8 +17,10 @@ public:
 
 private:
   double mGain;
-  FreqProcessor mFreqProcessorR;
-  FreqProcessor mFreqProcessorL;
+  FreqProcessor mFreqProcessorHpR;
+  FreqProcessor mFreqProcessorHpL;
+  FreqProcessor mFreqProcessorLpR;
+  FreqProcessor mFreqProcessorLpL;
 };
 
 #endif

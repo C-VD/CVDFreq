@@ -4,7 +4,8 @@
 class FreqProcessor
 {
 public:	
-	void process(double* inbuf, double* outbuf, int pNumSamples);
+	void highPass(double* inbuf, double* outbuf, int pNumSamples);
+	void lowPass(double* inbuf, double* outbuf, int pNumSamples);
 	void setCutFreq(double pNc);
 	void setSampleRate(double pSampleRate);
 private:

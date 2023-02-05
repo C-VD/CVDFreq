@@ -69,8 +69,8 @@ void CVDFreq::ProcessDoubleReplacing(double** inputs, double** outputs, int nFra
   double* out1 = outputs[0];
   double* out2 = outputs[1];
   
-  mFreqProcessorL.process(in1, out1, nFrames);
-  mFreqProcessorR.process(in2, out2, nFrames);
+  mFreqProcessorL.highPass(in1, out1, nFrames);
+  mFreqProcessorR.highPass(in2, out2, nFrames);
   for (int s = 0; s < nFrames; ++s, ++out1, ++out2)
   {
     *out1 *= mGain;

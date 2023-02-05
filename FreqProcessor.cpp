@@ -9,9 +9,14 @@ void FreqProcessor::setCutFreq(double pCutFreq) {
 	mC = (tan(PI_4 * mNc) - 1) / (tan(PI_4 * mNc) + 1);
 }
 
-void FreqProcessor::process(double* inbuf, double* outbuf, int pNumSamples) {
+void FreqProcessor::highPass(double* inbuf, double* outbuf, int pNumSamples) {
 	for (int s = 0; s < pNumSamples; s++, inbuf++, outbuf++) {
 		*outbuf = *inbuf - apf(*inbuf);
+	}
+}
+void FreqProcessor::lowPass(double* inbuf, double* outbuf, int pNumSamples) {
+	for (int s = 0; s < pNumSamples; s++, inbuf++, outbuf++) {
+		*outbuf = (*inbuf + apf(*inbuf)) / 2;
 	}
 }
 double FreqProcessor::apf(double in){

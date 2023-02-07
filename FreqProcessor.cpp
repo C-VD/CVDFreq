@@ -6,22 +6,34 @@ void FreqProcessor::setSampleRate(double pSampleRate) {
 
 void FreqProcessor::setCutFreq(double pCutFreq) {
 	mNc = (pCutFreq / mSampleRate);
+	lowCutOffFilter.setNc(mNc);
+	highCutOffFilter.setNc(mNc);
 	mC = (tan(PI_4 * mNc) - 1) / (tan(PI_4 * mNc) + 1);
+	lowCutOffFilter.setC(mC);
+	highCutOffFilter.setC(mC);
 }
 
-void FreqProcessor::highPass(double* inbuf, double* outbuf, int pNumSamples) {
-	for (int s = 0; s < pNumSamples; s++, inbuf++, outbuf++) {
-		*outbuf = *inbuf - apf(*inbuf);
+void FreqProcessor::lowPass(double* inbuf, double* outbuf, int nSamples) {
+	for (int s = 0; s < nSamples; s++) {
+		highCutOffFilter.lpass(inbuf, outbuf);
+		++inbuf;
+		++outbuf;
 	}
 }
-void FreqProcessor::lowPass(double* inbuf, double* outbuf, int pNumSamples) {
-	for (int s = 0; s < pNumSamples; s++, inbuf++, outbuf++) {
-		*outbuf = (*inbuf + apf(*inbuf)) / 2;
+
+void FreqProcessor::highPass(double* inbuf, double* outbuf, int nSamples) {
+	for (int s = 0; s < nSamples; s++) {
+		lowCutOffFilter.hpass(inbuf, outbuf);
+		++inbuf;
+		++outbuf;
 	}
 }
-double FreqProcessor::apf(double in){
- 	zStack[0] = in * mC + zStack[1] + zStack[2] * -mC;
-	zStack[2] = zStack[0];
-	zStack[1] = in;
-	return zStack[0];
-  }
+void FreqProcessor::bandPass(double* inbuf, double* outbuf, int nSamples) {
+	for (int s = 0; s < nSamples; s++) {
+		lowCutOffFilter.hpass(inbuf, outbuf);
+		highCutOffFilter.lpass(outbuf, outbuf);
+		++inbuf;
+		++outbuf;
+	}
+
+}

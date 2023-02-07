@@ -50,10 +50,8 @@ CVDFreq::CVDFreq(IPlugInstanceInfo instanceInfo)
   //MakePreset("preset 1", ... );
   MakeDefaultPreset((char *) "-", kNumPrograms);
 
-  mFreqProcessorHpL.setSampleRate(GetSampleRate());
-  mFreqProcessorHpR.setSampleRate(GetSampleRate());
-  mFreqProcessorLpL.setSampleRate(GetSampleRate());
-  mFreqProcessorLpR.setSampleRate(GetSampleRate());
+  mFreqProcessorL.setSampleRate(GetSampleRate());
+  mFreqProcessorR.setSampleRate(GetSampleRate());
 }
 
 CVDFreq::~CVDFreq() {}
@@ -66,13 +64,9 @@ void CVDFreq::ProcessDoubleReplacing(double** inputs, double** outputs, int nFra
   double* in2 = inputs[1];
   double* out1 = outputs[0];
   double* out2 = outputs[1];
-  double temp1[512];
-  double temp2[512];
   
-  mFreqProcessorHpL.highPass(in1, temp1, nFrames);
-  mFreqProcessorHpR.highPass(in2, temp2, nFrames);
-  mFreqProcessorLpL.lowPass(temp1, out1, nFrames);
-  mFreqProcessorLpR.lowPass(temp2, out2, nFrames);
+  mFreqProcessorL.bandPass(in1, out1, nFrames);
+  mFreqProcessorR.bandPass(in2, out2, nFrames);
 }
 
 void CVDFreq::Reset()
@@ -88,10 +82,8 @@ void CVDFreq::OnParamChange(int paramIdx)
   switch (paramIdx)
   {
     case kCutFreq:
-      mFreqProcessorHpL.setCutFreq(GetParam(kCutFreq)->Value());
-      mFreqProcessorHpR.setCutFreq(GetParam(kCutFreq)->Value());
-      mFreqProcessorLpL.setCutFreq(GetParam(kCutFreq)->Value());
-      mFreqProcessorLpR.setCutFreq(GetParam(kCutFreq)->Value());
+      mFreqProcessorL.setCutFreq(GetParam(kCutFreq)->Value());
+      mFreqProcessorR.setCutFreq(GetParam(kCutFreq)->Value());
       break;
 
     default:

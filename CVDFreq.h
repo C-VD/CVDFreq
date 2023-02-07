@@ -17,10 +17,8 @@ public:
 
 private:
   double mCutFreq;
-  FreqProcessor mFreqProcessorHpR;
-  FreqProcessor mFreqProcessorHpL;
-  FreqProcessor mFreqProcessorLpR;
-  FreqProcessor mFreqProcessorLpL;
+  FreqProcessor mFreqProcessorL;
+  FreqProcessor mFreqProcessorR;
 };
 
 #endif

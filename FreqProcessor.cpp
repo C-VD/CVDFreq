@@ -5,12 +5,12 @@ void FreqProcessor::setSampleRate(double pSampleRate) {
 }
 
 void FreqProcessor::setCutFreq(double pCutFreq) {
-	mNc = (pCutFreq / mSampleRate);
-	lowCutOffFilter.setNc(mNc);
-	highCutOffFilter.setNc(mNc);
-	mC = (tan(PI_4 * mNc) - 1) / (tan(PI_4 * mNc) + 1);
-	lowCutOffFilter.setC(mC);
-	highCutOffFilter.setC(mC);
+	double nc = (pCutFreq / mSampleRate);
+	lowCutOffFilter.setNc(nc);
+	highCutOffFilter.setNc(nc);
+	double c = (tan(PI_4 * nc) - 1) / (tan(PI_4 * nc) + 1);
+	lowCutOffFilter.setC(c);
+	highCutOffFilter.setC(c);
 }
 
 void FreqProcessor::lowPass(double* inbuf, double* outbuf, int nSamples) {

@@ -5,7 +5,7 @@
 class FreqProcessor
 {
 public:	
-	void setCutFreq(double pNc);
+	void setCutFreq(double pCutFreq);
 	void setSampleRate(double pSampleRate);
 	void highPass(double* inbuf, double* outbuf, int nSamples);
 	void lowPass(double* inbuf, double* outbuf, int nSamples);
@@ -13,7 +13,5 @@ public:
 	CutOffFilter highCutOffFilter;
 	CutOffFilter lowCutOffFilter;
 private:
-	double mNc;
-	double mC;
 	int mSampleRate;
 };

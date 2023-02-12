@@ -7,6 +7,8 @@ class FreqProcessor
 public:	
 	void setCutFreq(double pCutFreq);
 	void setSampleRate(double pSampleRate);
+
+	/* Filters */
 	void highPass(double* inbuf, double* outbuf, int nSamples);
 	void lowPass(double* inbuf, double* outbuf, int nSamples);
 	void bandPass(double* inbuf, double* outbuf, int nSamples);

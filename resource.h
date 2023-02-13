@@ -65,8 +65,8 @@ instrument determined by PLUG _IS _INST
 #define BG_FN "resources/img/bg.png"
 
 // GUI default dimensions
-#define GUI_WIDTH 212
-#define GUI_HEIGHT 212
+#define GUI_WIDTH 354
+#define GUI_HEIGHT 179
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones
 #if defined(SA_API)

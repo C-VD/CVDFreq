@@ -8,7 +8,7 @@ const int kNumPrograms = 1;
 enum EParams
 {
   kGain = 0,
-  kR,
+  kMode,
   kCutFreq,
   kNumParams
 };
@@ -18,10 +18,10 @@ enum ELayout
   kWidth = GUI_WIDTH,
   kHeight = GUI_HEIGHT,
 
-  kRX = 45,
-  kRY = 55,
-  kCutFreqX = 120,
-  kCutFreqY = 55,
+  kModeX = 60,
+  kModeY = 50,
+  kCutFreqX = 245,
+  kCutFreqY = 50,
   kKnobFrames = 60
 };
 
@@ -33,8 +33,8 @@ CVDFreq::CVDFreq(IPlugInstanceInfo instanceInfo)
   //arguments are: name, defaultVal, minVal, maxVal, step, label
   GetParam(kCutFreq)->InitDouble("Cutoff Frequency", 50., 30., 16000.0, 1.00, "Hz");
   GetParam(kCutFreq)->SetShape(2.);
-  GetParam(kR)->InitDouble("R", 100., 0., 100.0, 1.00, "%");
-  GetParam(kR)->SetShape(1.);
+  GetParam(kMode)->InitDouble("Mode", 2., 1., 3.0, 1.00, "");
+  GetParam(kMode)->SetShape(1.);
 
   IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
   pGraphics->AttachBackground(BG_ID, BG_FN);
@@ -42,7 +42,7 @@ CVDFreq::CVDFreq(IPlugInstanceInfo instanceInfo)
   IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
 
   //pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kGainY, kGain, &knob));
-  pGraphics->AttachControl(new IKnobMultiControl(this, kRX, kRY, kR, &knob));
+  pGraphics->AttachControl(new IKnobMultiControl(this, kModeX, kModeY, kMode, &knob));
   pGraphics->AttachControl(new IKnobMultiControl(this, kCutFreqX, kCutFreqY, kCutFreq, &knob));
 
   AttachGraphics(pGraphics);
@@ -85,7 +85,8 @@ void CVDFreq::OnParamChange(int paramIdx)
       mFreqProcessorL.setCutFreq(GetParam(kCutFreq)->Value());
       mFreqProcessorR.setCutFreq(GetParam(kCutFreq)->Value());
       break;
-
+    case kMode:
+        break;
     default:
       break;
   }

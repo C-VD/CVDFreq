@@ -7,8 +7,6 @@ void FreqProcessor::setSampleRate(double pSampleRate) {
 void FreqProcessor::setCutFreq(double pCutFreq) {
 	/* Converting frequancy to relative frequancy */
 	double nc = (pCutFreq / mSampleRate);
-	lowCutOffFilter.setNc(nc);
-	highCutOffFilter.setNc(nc);
 	/* Setting the all-pass filter coefficiennt */
 	double c = (tan(PI_4 * nc) - 1) / (tan(PI_4 * nc) + 1);
 	lowCutOffFilter.setC(c);
